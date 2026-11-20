@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dorks — Google & Shodan Cheat Sheets for Bug Bounty</title>
+  <meta name="description" content="1000+ Google and Shodan dorks for recon, OSINT, and bug bounty hunting. Categorized, searchable, ready to use. For authorized security research only."/>
+  <meta property="og:title" content="Dorks — Google & Shodan Cheat Sheets"/>
+  <meta property="og:description" content="1000+ Google and Shodan dorks for recon, OSINT, and bug bounty. Categorized, searchable, ready to use."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://divshettyy.github.io/Dorks/"/>
+  <meta name="twitter:card" content="summary"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d1117; --card: #161b22; --border: #30363d;
+      --text: #c9d1d9; --muted: #8b949e; --accent: #58a6ff;
+      --google: #34a853; --shodan: #ff6b35;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .hero { max-width: 700px; }
+    .badge-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 28px; }
+    .badge-row img { height: 20px; }
+    h1 {
+      font-size: 3em;
+      background: linear-gradient(135deg, var(--google), var(--accent), var(--shodan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 16px;
+    }
+    .subtitle { color: var(--muted); font-size: 1.1em; margin-bottom: 48px; line-height: 1.7; }
+    .cards { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-bottom: 48px; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 32px 28px;
+      width: 260px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
+    .card-icon { font-size: 2.4em; margin-bottom: 14px; }
+    .card-title { font-size: 1.2em; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .card-desc { font-size: 0.88em; color: var(--muted); line-height: 1.5; }
+    .card.google { border-top: 3px solid var(--google); }
+    .card.shodan { border-top: 3px solid var(--shodan); }
+    .github-link { margin-top: 10px; }
+    .github-link a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.9em;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+    .github-link a:hover { border-bottom-color: var(--accent); }
+    footer { margin-top: 60px; color: var(--muted); font-size: 0.8em; }
+    footer a { color: var(--accent); text-decoration: none; }
+    @media (max-width: 600px) {
+      h1 { font-size: 2em; }
+      .cards { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <div class="badge-row">
+      <img src="https://img.shields.io/badge/Google_Dorks-1000%2B-34a853?style=flat-square&logo=google" alt="Google Dorks"/>
+      <img src="https://img.shields.io/badge/Shodan_Dorks-200%2B-ff6b35?style=flat-square&logo=shodan" alt="Shodan Dorks"/>
+      <img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" alt="MIT"/>
+      <img src="https://img.shields.io/github/last-commit/divshettyy/Dorks?style=flat-square" alt="Last Commit"/>
+    </div>
+
+    <h1>🔍 Dorks</h1>
+    <p class="subtitle">
+      Curated <strong>Google</strong> and <strong>Shodan</strong> dork cheat-sheets for<br>
+      recon, OSINT, and bug bounty hunting.<br>
+      Categorized · Searchable · Copy-to-clipboard · Ready to use.
+    </p>
+
+    <div class="cards">
+      <a href="Google.html" class="card google">
+        <div class="card-icon">🌐</div>
+        <div class="card-title">Google Dorks</div>
+        <div class="card-desc">1000+ ready-made Google search operators. Enter your target domain and click to search instantly.</div>
+      </a>
+      <a href="Shodan.html" class="card shodan">
+        <div class="card-icon">🔴</div>
+        <div class="card-title">Shodan Dorks</div>
+        <div class="card-desc">200+ Shodan queries for exposed databases, cameras, IoT, cloud storage, remote access, and more.</div>
+      </a>
+    </div>
+
+    <div class="github-link">
+      <a href="https://github.com/divshettyy/Dorks" target="_blank">⭐ Star on GitHub</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/divshettyy/Dorks/blob/main/CONTRIBUTING.md" target="_blank">Contribute</a>
+    </div>
+  </div>
+
+  <footer>
+    ⚠️ For authorized security research, bug bounty, and educational use only.<br>
+    Only probe systems you own or have written permission to test.<br><br>
+    <a href="https://github.com/divshettyy/Dorks">github.com/divshettyy/Dorks</a>
+  </footer>
+</body>
+</html>

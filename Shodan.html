@@ -1,149 +1,331 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	<title>Sensitive File Search</title>
-	<meta name="description" content="Curated Shodan dork cheat-sheet for bug bounty, recon and OSINT — ready-made queries for internet-exposed services and devices. For authorized security research only." />
-	<meta property="og:title" content="Shodan Dorks for Bug Bounty" />
-	<meta property="og:description" content="Curated Shodan dork cheat-sheet for bug bounty, recon and OSINT. For authorized security research only." />
-	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://divshettyy.github.io/Dorks/Shodan.html" />
-	<meta name="twitter:card" content="summary" />
-	<meta name="twitter:title" content="Shodan Dorks for Bug Bounty" />
-	<meta name="twitter:description" content="Curated Shodan dork cheat-sheet for bug bounty, recon and OSINT. For authorized security research only." />
-	<style>
-		body {
-			background-color: #0b0b0b;
-			font-family: Arial, sans-serif;
-			margin: 0;
-			padding: 0;
-		}
-		h1, h2 {
-			color: #f3efef;
-			text-align: center;
-		}
-		label {
-			display: block;
-			font-size: 18px;
-			font-weight: bold;
-			margin: 20px auto 10px;
-			text-align: center;
-		}
-		input[type="text"] {
-			border: 2px solid #ccc;
-			border-radius: 5px;
-			font-size: 16px;
-			margin: 0 auto;
-			padding: 10px;
-			width: 300px;
-		}
-                div{
-                     align: center;
-                }
-		button {
-			background-color: #333;
-                        order: none;           
-                        border-radius: 5px;
-                        color: #fcf7f7;
-                        cursor: pointer;
-                        display: inline;
-			font-size: 16px;
-                        margin: 10px auto;
-                        padding: 10px;
-                        width: 300px;
-		}
-		button:hover {
-			background-color: #555;
-		}
-	</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shodan Dorks for Bug Bounty</title>
+  <meta name="description" content="Curated Shodan dork cheat-sheet for bug bounty, recon and OSINT — ready-made queries for internet-exposed services and devices. For authorized security research only." />
+  <meta property="og:title" content="Shodan Dorks for Bug Bounty" />
+  <meta property="og:description" content="Curated Shodan dork cheat-sheet for bug bounty, recon and OSINT. For authorized security research only." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://divshettyy.github.io/Dorks/Shodan.html" />
+  <meta name="twitter:card" content="summary" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #ff6b35;
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --text: #c9d1d9;
+      --muted: #8b949e;
+      --accent: #58a6ff;
+      --border: #30363d;
+      --green: #3fb950;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 40px 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    header { text-align: center; margin-bottom: 40px; }
+    h1 {
+      font-size: 2.6em;
+      background: linear-gradient(45deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+    .subtitle { color: var(--muted); font-size: 1em; }
+    nav { text-align: center; margin: 20px 0 40px; }
+    nav a {
+      color: var(--accent);
+      text-decoration: none;
+      margin: 0 16px;
+      font-size: 0.95em;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+    nav a:hover { border-bottom-color: var(--accent); }
+    .search-wrap { text-align: center; margin-bottom: 40px; }
+    .search-wrap label { color: var(--muted); display: block; margin-bottom: 10px; }
+    .search-wrap input {
+      width: 100%;
+      max-width: 500px;
+      padding: 12px 18px;
+      font-size: 1em;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      transition: border-color 0.2s;
+    }
+    .search-wrap input:focus { outline: none; border-color: var(--accent); }
+    .filter-search { text-align: center; margin-bottom: 24px; }
+    .filter-search input {
+      width: 100%;
+      max-width: 500px;
+      padding: 10px 16px;
+      font-size: 0.95em;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+    }
+    .filter-search input:focus { outline: none; border-color: var(--primary); }
+    .section-title {
+      font-size: 1.1em;
+      font-weight: 600;
+      color: var(--primary);
+      margin: 36px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .dork-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .dork-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .dork-card:hover { transform: translateY(-3px); box-shadow: 0 4px 16px rgba(0,0,0,0.4); }
+    .dork-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .dork-query {
+      font-family: 'Courier New', monospace;
+      font-size: 0.82em;
+      color: var(--green);
+      word-break: break-all;
+      flex: 1;
+    }
+    .btn-row { display: flex; gap: 6px; margin-top: 12px; }
+    .btn {
+      flex: 1;
+      padding: 7px 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8em;
+      font-weight: 500;
+      transition: background 0.15s;
+    }
+    .btn-shodan { background: var(--primary); color: #fff; }
+    .btn-shodan:hover { background: #e5602e; }
+    .btn-copy { background: var(--border); color: var(--text); }
+    .btn-copy:hover { background: #3c444d; }
+    .btn-copy.copied { background: var(--green); color: #fff; }
+    .tag {
+      font-size: 0.7em;
+      padding: 2px 8px;
+      border-radius: 20px;
+      background: rgba(255,107,53,0.15);
+      color: var(--primary);
+      white-space: nowrap;
+    }
+    .disclaimer {
+      margin-top: 60px;
+      padding: 16px 20px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.85em;
+      color: var(--muted);
+      text-align: center;
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 1.8em; }
+      .dork-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-     <h1>Project Dork : Shodan.io</h1>
-	<h2>Sensitive File Search For Bug Bounty Hunters</h2>
-	<label for="searchTerm">Enter a domain /subdomain /custom word to search:</label>
-        <center><input type="text" id="searchTerm" placeholder="target.com"></center>
-	<br><br>
-	<h2>Search Options : Shodan.io Dorks for Finding Sensitive Information</h2>
-        <div><center>
-        <button onclick="search('http.title:&quot;Dashboard&quot;')">Dashboard</button>
-	   <button onclick="search('http.title:&quot;Login&quot;')">Login</button>
- 	   <button onclick="search('http.title:&quot;Admin&quot;')">Admin</button>
-        <button onclick="search('http.title:&quot;Index of /&quot;')">Index of /</button>
-        </div></center>
-        <div><center>
-	   <button onclick="search('apache')">apache</button>
-	   <button onclick="search('nginx')">nginx</button>
-	   <button onclick="search('iis')">iis</button>
-	   <button onclick="search('mysql')">mysql</button>
-	   </div></center>
-        <div><center>
-		<button onclick="search('postgresql')">postgresql</button>
-		<button onclick="search('oracle')">oracle</button>
-		<button onclick="search('mongodb')">mongodb</button>
-		<button onclick="search('couchdb')">couchdb</button>
-	   </div></center>
-        <div><center>
-		<button onclick="search('ftp')">ftp</button>
-		<button onclick="search('ssh')">ssh</button>
-		<button onclick="search('telnet')">telnet</button>
-		<button onclick="search('snmp')">snmp</button>
-	   </div></center>
-        <div><center>
-		<button onclick="search('rdp')">rdp</button>
-		<button onclick="search('vnc')">vnc</button>
-		<button onclick="search('xmpp')">xmpp</button>
-		<button onclick="search('mqtt')">mqtt</button>
-	   </div></center>
-        <div><center>
-		<button onclick="search('http.favicon.hash')">http.favicon.hash</button>
-		<button onclick="search('http.title')">http.title</button>
-		<button onclick="search('http.html')">http.html</button>
-		<button onclick="search('http.component')">http.component</button>
-	   </div></center>
-        <div><center>
-		<button onclick="search('http.component_category')">http.component_category</button>
-		<button onclick="search('http.component_type')">http.component_type</button>
-		<button onclick="search('http.headers.server')">http.headers.server</button>
-		<button onclick="search('http.headers.www-authenticate')">http.headers.www-authenticate</button>
-	   </div></center>
-        <div><center>
-		<button onclick="search('http.status')">http.status</button>
-		<button onclick="search('http.html_hash')">http.html_hash</button>
-		<button onclick="search('ssl.cert.subject.common_name')">ssl.cert.subject.common_name</button>
-		<button onclick="search('ssl.cert.fingerprint')">ssl.cert.fingerprint</button>
-	   </div></center>
-        <div><center>
-		<button onclick="search('ssl.cert.issuer.common_name')">ssl.cert.issuer.common_name</button>
-		<button onclick="search('ssl.cert.serial_number')">ssl.cert.serial_number</button>
-		<button onclick="search('ssl.cert.subject.country_name')">ssl.cert.subject.country_name</button>
-		<button onclick="search('ssl.cert.subject.organization_name')">ssl.cert.subject.organization_name</button>
-	   </div></center>
-        <div><center>
-		<button onclick="search('ssl.cert.subject.organizational_unit_name')">ssl.cert.subject.organizational_unit_name</button>
-		<button onclick="search('ssl.cert.validity')">ssl.cert.validity</button>
-		<button onclick="search('ssl.chain_count')">ssl.chain_count</button>
-		<button onclick="search('ssl.cipher.bits')">ssl.cipher.bits</button>
-	   </div></center>
-        <div><center>
-		<button onclick="search('ssl.cipher.name')">ssl.cipher.name</button>
-		<button onclick="search('ssl.cipher.version')">ssl.cipher.version</button>
-		<button onclick="search('ssl.get.version')">ssl.get.version</button>
-		<button onclick="search('ssl.has.rc4')">ssl.has.rc4</button>
-	   </div></center>
-        <div><center>
-        	<button type="button" onclick="search('.exports')">filename:exports</button>
-          <button type="button" onclick="search('ssl.heartbleed.status')">ssl.heartbleed.status</button>
-          <button type="button" onclick="search('ssl.protocol')">ssl.protocol</button>
-          <button type="button" onclick="search('ssl.version')">ssl.version</button>
-        <script>
-		function search(searchTerm) {
-			let customWord = document.getElementById('searchTerm').value;
-			let url = "https://www.shodan.io/search?query=" + searchTerm + " " +  encodeURIComponent(customWord);
-			window.open(url);
-		}
-	</script>
+  <header>
+    <h1>🔴 Shodan Dorks</h1>
+    <p class="subtitle">Curated queries for exposed services, devices, and misconfigurations</p>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="Google.html">Google Dorks</a>
+    <a href="https://github.com/divshettyy/Dorks" target="_blank">GitHub</a>
+  </nav>
+
+  <div class="search-wrap">
+    <label for="targetInput">Enter domain / keyword to append to queries:</label>
+    <input type="text" id="targetInput" placeholder="target.com or keyword" oninput="updateTarget()">
+  </div>
+
+  <div class="filter-search">
+    <input type="text" id="filterInput" placeholder="Filter dorks..." oninput="filterCards()">
+  </div>
+
+  <div id="dorksContainer"></div>
+
+  <div class="disclaimer">
+    ⚠️ For authorized security research, bug bounty, and educational use only. Only probe systems you own or have written permission to test.
+  </div>
+
+  <script>
+    const DORKS = [
+      { category: "Login Panels & Dashboards", tag: "auth", items: [
+        { q: 'http.title:"Dashboard"', desc: "Exposed dashboards" },
+        { q: 'http.title:"Login"', desc: "Login panels" },
+        { q: 'http.title:"Admin"', desc: "Admin panels" },
+        { q: 'http.title:"Admin Panel"', desc: "Admin panels (verbose)" },
+        { q: 'http.title:"Kibana"', desc: "Kibana dashboards" },
+        { q: 'http.title:"Grafana"', desc: "Grafana dashboards" },
+        { q: 'http.title:"phpMyAdmin"', desc: "phpMyAdmin" },
+        { q: 'http.title:"Jenkins"', desc: "Jenkins CI" },
+        { q: 'http.title:"Portainer"', desc: "Portainer Docker UI" },
+        { q: 'http.title:"Kubernetes Dashboard"', desc: "K8s dashboard" },
+      ]},
+      { category: "Exposed Databases", tag: "database", items: [
+        { q: 'product:MongoDB', desc: "MongoDB instances" },
+        { q: 'product:ElasticSearch', desc: "Elasticsearch" },
+        { q: 'port:6379', desc: "Redis (unauthenticated)" },
+        { q: 'port:27017', desc: "MongoDB port" },
+        { q: 'port:9200 http.title:"index of"', desc: "Elasticsearch indexes" },
+        { q: 'product:CouchDB', desc: "CouchDB" },
+        { q: 'port:5984', desc: "CouchDB port" },
+        { q: 'port:3306 "mysql"', desc: "MySQL" },
+        { q: 'port:5432 "postgresql"', desc: "PostgreSQL" },
+        { q: 'port:1433 "mssql"', desc: "MSSQL" },
+      ]},
+      { category: "Remote Access", tag: "remote", items: [
+        { q: 'port:3389', desc: "RDP exposed" },
+        { q: 'port:5900 "RFB"', desc: "VNC" },
+        { q: 'port:22 "OpenSSH"', desc: "SSH servers" },
+        { q: 'port:23 "telnet"', desc: "Telnet" },
+        { q: 'product:TeamViewer', desc: "TeamViewer" },
+        { q: 'html:"Remote Desktop Web Access"', desc: "RD Web Access" },
+      ]},
+      { category: "Web Servers", tag: "webserver", items: [
+        { q: 'product:Apache', desc: "Apache servers" },
+        { q: 'product:nginx', desc: "Nginx servers" },
+        { q: 'product:IIS', desc: "IIS servers" },
+        { q: 'http.title:"Index of /"', desc: "Open directory listings" },
+        { q: 'http.title:"Welcome to nginx"', desc: "Default nginx page" },
+        { q: 'http.title:"Apache HTTP Server"', desc: "Default Apache page" },
+      ]},
+      { category: "IoT & Industrial", tag: "iot", items: [
+        { q: 'product:Hikvision', desc: "Hikvision cameras" },
+        { q: 'product:Dahua', desc: "Dahua cameras" },
+        { q: 'http.title:"DVR" port:80', desc: "DVR systems" },
+        { q: 'port:1883 MQTT', desc: "MQTT brokers" },
+        { q: 'port:102 "S7"', desc: "Siemens S7 PLCs" },
+        { q: 'port:502 "Modbus"', desc: "Modbus devices" },
+        { q: 'product:NETGEAR', desc: "NETGEAR routers" },
+        { q: 'html:"RouterOS" port:80', desc: "MikroTik routers" },
+      ]},
+      { category: "Cloud & Storage", tag: "cloud", items: [
+        { q: 'http.title:"S3 Bucket" "AccessDenied"', desc: "Misconfigured S3" },
+        { q: 'product:MinIO', desc: "MinIO object storage" },
+        { q: 'http.title:"GlusterFS"', desc: "GlusterFS" },
+        { q: 'product:Docker', desc: "Docker APIs" },
+        { q: 'port:2375 "Docker"', desc: "Unauthenticated Docker" },
+        { q: 'port:8500 "Consul"', desc: "Consul service mesh" },
+      ]},
+      { category: "SSL / Certificate Recon", tag: "ssl", items: [
+        { q: 'ssl.cert.subject.cn:"*.target.com"', desc: "Wildcard certs for domain" },
+        { q: 'ssl.cert.issuer.cn:"Let\'s Encrypt"', desc: "Let's Encrypt certs" },
+        { q: 'ssl.heartbleed.vulnerable:true', desc: "Heartbleed vulnerable" },
+        { q: 'ssl.cert.expired:true', desc: "Expired SSL certs" },
+        { q: 'has_ssl:true port:443', desc: "HTTPS services" },
+      ]},
+      { category: "Sensitive Files & Configs", tag: "files", items: [
+        { q: 'http.html:"phpinfo()"', desc: "phpinfo() exposed" },
+        { q: 'http.html:"env" "APP_KEY"', desc: ".env files" },
+        { q: 'http.title:"Exposed .git"', desc: ".git exposure" },
+        { q: 'http.html:"DB_PASSWORD"', desc: "DB credentials in HTML" },
+        { q: 'http.html:"api_key"', desc: "API keys in HTML" },
+      ]},
+    ];
+
+    let currentTarget = '';
+
+    function renderAll() {
+      const container = document.getElementById('dorksContainer');
+      container.innerHTML = '';
+      const filter = document.getElementById('filterInput').value.toLowerCase();
+
+      DORKS.forEach(section => {
+        const filtered = section.items.filter(d =>
+          !filter || d.q.toLowerCase().includes(filter) || d.desc.toLowerCase().includes(filter)
+        );
+        if (filtered.length === 0) return;
+
+        const title = document.createElement('div');
+        title.className = 'section-title';
+        title.innerHTML = `${section.category} <span class="tag">${section.tag}</span>`;
+        container.appendChild(title);
+
+        const grid = document.createElement('div');
+        grid.className = 'dork-grid';
+
+        filtered.forEach(d => {
+          const query = currentTarget
+            ? d.q.replace('target.com', currentTarget)
+            : d.q;
+
+          const card = document.createElement('div');
+          card.className = 'dork-card';
+          card.dataset.q = query.toLowerCase();
+          card.dataset.desc = d.desc.toLowerCase();
+
+          card.innerHTML = `
+            <div class="dork-top">
+              <code class="dork-query">${escHtml(query)}</code>
+            </div>
+            <div class="btn-row">
+              <button class="btn btn-shodan" onclick="openShodan(${JSON.stringify(query)})">Search Shodan</button>
+              <button class="btn btn-copy" onclick="copyDork(this, ${JSON.stringify(query)})">Copy</button>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+
+        container.appendChild(grid);
+      });
+    }
+
+    function escHtml(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function openShodan(q) {
+      window.open('https://www.shodan.io/search?query=' + encodeURIComponent(q), '_blank');
+    }
+
+    function copyDork(btn, q) {
+      navigator.clipboard.writeText(q).then(() => {
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+      });
+    }
+
+    function updateTarget() {
+      currentTarget = document.getElementById('targetInput').value.trim();
+      renderAll();
+    }
+
+    function filterCards() { renderAll(); }
+
+    renderAll();
+  </script>
 </body>
 </html>
-

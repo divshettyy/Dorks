@@ -107,6 +107,25 @@
       text-decoration: underline;
     }
 
+    .copy-btn {
+      display: block;
+      margin-top: 10px;
+      padding: 5px 10px;
+      background: var(--border-color);
+      color: var(--muted-color);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.75em;
+      transition: background 0.2s, color 0.2s;
+    }
+    .copy-btn:hover { background: #3c444d; color: var(--text-color); }
+    .copy-btn.copied { background: #3fb950; color: #fff; }
+
+    .nav-links { text-align: center; margin-bottom: 30px; }
+    .nav-links a { color: var(--accent-color); text-decoration: none; margin: 0 14px; font-size: 0.9em; }
+    .nav-links a:hover { text-decoration: underline; }
+
     p.description {
       color: var(--muted-color);
       font-size: 0.85em;
@@ -178,6 +197,12 @@
 
 <body>
   <h1>Google Dorks for Bug Bounty</h1>
+
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="Shodan.html">Shodan Dorks</a>
+    <a href="https://github.com/divshettyy/Dorks" target="_blank">GitHub</a>
+  </div>
 
   <div class="search-container">
     <label for="domainInput">Enter a domain:</label>
@@ -261,7 +286,20 @@
       link.classList.add("dorkLink");
       link.target = "_blank";
 
+      const copyBtn = document.createElement("button");
+      copyBtn.textContent = "Copy";
+      copyBtn.className = "copy-btn";
+      copyBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        navigator.clipboard.writeText(dork).then(() => {
+          copyBtn.textContent = "Copied!";
+          copyBtn.classList.add("copied");
+          setTimeout(() => { copyBtn.textContent = "Copy"; copyBtn.classList.remove("copied"); }, 1500);
+        });
+      });
+
       listItem.appendChild(link);
+      listItem.appendChild(copyBtn);
       return listItem;
     }
 
